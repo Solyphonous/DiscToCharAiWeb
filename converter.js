@@ -31,7 +31,7 @@ function convertFile() {
             file.text().then((raw) => {
                 let json = JSON.parse(raw)
     
-                if (!Array.isArray(json)) {
+                if (!Array.isArray(json) || !json[0].hasOwnProperty("Contents")) {
                     showError("Invalid json file")
                 } else {
                     let text = ""
@@ -50,8 +50,7 @@ function convertFile() {
                         }
                         i++
                     })
-    
-                    console.log(text)
+
                     saveFile(text)
                 }
             })
