@@ -18,39 +18,44 @@ function saveFile(text) {
 }
 
 function convertFile() {
-    let file = document.getElementById("file").files[0]
-    if (file.type != "application/json") {
-        showError("Invalid file type!")
+    let files = document.getElementById("file").files
+
+    if (files.length <= 0) { 
+        showError("No file selected.") 
     } else {
-        // Convert
-        file.text().then((raw) => {
-            let json = JSON.parse(raw)
-
-            if (!Array.isArray(json)) {
-                showError("Invalid json file")
-            } else {
-                let text = ""
-                let i = 0
-
-                json.forEach((item) => {
-                    let message = item.Contents
-                    if (!message.includes("https") && message != "" && message !== null) { // Check  message is valid
-
-                        if (i == 0) {
-                            text += "{{char}}:" + message
-                        } else {
-                            text += "\n{{char}}:" + message
+        let file = document.getElementById("file").files[0]
+        if (file.type != "application/json") {
+            showError("Invalid file type!")
+        } else {
+            // Convert
+            file.text().then((raw) => {
+                let json = JSON.parse(raw)
+    
+                if (!Array.isArray(json)) {
+                    showError("Invalid json file")
+                } else {
+                    let text = ""
+                    let i = 0
+    
+                    json.forEach((item) => {
+                        let message = item.Contents
+                        if (!message.includes("https") && message != "" && message !== null) { // Check  message is valid
+    
+                            if (i == 0) {
+                                text += "{{char}}:" + message
+                            } else {
+                                text += "\n{{char}}:" + message
+                            }
+                            
                         }
-                        
-                    }
-                    i++
-                })
-
-                console.log(text)
-                saveFile(text)
-            }
-        })
-
+                        i++
+                    })
+    
+                    console.log(text)
+                    saveFile(text)
+                }
+            })
+        }
     }
 }
 
