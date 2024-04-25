@@ -35,21 +35,17 @@ function convertFile() {
                     showError("Invalid json file")
                 } else {
                     let text = ""
-                    let i = 0
     
-                    json.forEach((item) => {
-                        let message = item.Contents
+                    for (let i = 0; i < json.length; i++) {
+                        let message = json[i].Contents
                         if (!message.includes("https") && message != "" && message !== null) { // Check  message is valid
-    
                             if (i == 0) {
                                 text += "{{char}}:" + message
                             } else {
                                 text += "\n{{char}}:" + message
                             }
-                            
                         }
-                        i++
-                    })
+                    }
 
                     saveFile(text)
                 }
