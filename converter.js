@@ -45,6 +45,10 @@ function convertFile() {
                                 text += "\n{{char}}:" + message
                             }
                         }
+                        if (text.length >= 32000) {
+                            showError("Maximum length reached, only outputted first " + i + " lines of " + json.length)
+                            break
+                        }
                     }
 
                     saveFile(text)
