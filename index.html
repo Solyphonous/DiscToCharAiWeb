@@ -1,13 +1,18 @@
 <!DOCTYPE html>
+
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="converter.js"></script>
 </head>
+
 <body>
     <div class="content">
-        <p>Incredible discord to char ai converter</p>
+        <h1>Incredible discord to char ai converter</h1>
+        <div class="file-upload" id="dropzone" ondragover="event.preventDefault()">
+                <label for="file" class="upload-button"><b>Choose file</b></label>
+        </div>
         <input type="file" id="file" accept="application/json">
-        <button id="submit">Submit</button>
         <div id="error"></div>
     </div>
 </body>

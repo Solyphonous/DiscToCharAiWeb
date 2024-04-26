@@ -1,14 +1,14 @@
-function showError(msg) {
+function showError(msg, timeout = 2) { // Timeout in seconds
     let errorbox = document.getElementById("error")
     errorbox.textContent = "Error: " + msg
 
     setTimeout(() => {
         errorbox.textContent = ""
-    }, 2000);
+    }, timeout * 1000);
 }
 
 function saveFile(text) {
-    const saveBlob = new Blob([text], {type: "text/plain"})
+    const saveBlob = new Blob([text], { type: "text/plain" })
     let download = document.createElement("a")
     download.href = URL.createObjectURL(saveBlob)
     download.download = "result.txt"
@@ -17,25 +17,35 @@ function saveFile(text) {
     document.body.removeChild(download)
 }
 
-function convertFile() {
-    let files = document.getElementById("file").files
+function dropHandler(event) {
+    console.log("dropped")
+    event.preventDefault()
+    let files = event.dataTransfer.files
+    convertFile(files)
+}
 
-    if (files.length <= 0) { 
-        showError("No file selected.") 
+function uploadHandler(event) {
+    let files = event.target.files
+    convertFile(files)
+}
+
+function convertFile(files) {
+    if (files.length <= 0) {
+        showError("No file selected.")
     } else {
-        let file = document.getElementById("file").files[0]
+        let file = files[0]
         if (file.type != "application/json") {
             showError("Invalid file type!")
         } else {
             // Convert
             file.text().then((raw) => {
                 let json = JSON.parse(raw)
-    
+
                 if (!Array.isArray(json) || !json[0].hasOwnProperty("Contents")) {
                     showError("Invalid json file")
                 } else {
                     let text = ""
-    
+
                     for (let i = 0; i < json.length; i++) {
                         let message = json[i].Contents
                         if (!message.includes("https") && message != "" && message !== null) { // Check  message is valid
@@ -46,7 +56,7 @@ function convertFile() {
                             }
                         }
                         if (text.length >= 32000) {
-                            showError("Maximum length reached, only outputted first " + i + " lines of " + json.length)
+                            showError("Maximum length reached, only outputted first " + i + " lines of " + json.length, 5)
                             break
                         }
                     }
@@ -59,5 +69,10 @@ function convertFile() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("submit").addEventListener("click", convertFile)
+    document.getElementById("file").addEventListener("change", uploadHandler)
+
+    let dropzone = document.getElementById("dropzone")
+    dropzone.addEventListener("drop", dropHandler)
+    dropzone.addEventListener("dragover", (event) => { event.preventDefault() })
+
 })

@@ -1,5 +1,46 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: large;
+}
+
+label {
+    text-align: center;
+}
+
 .content {
     text-align: center;
     margin: auto;
-    max-width: 800px;
+    max-width: max(50%, min(800px, 100%));
+}
+
+.file-upload {
+    width: auto;
+    background-color: rgb(239, 238, 243);;
+    height: 20rem;
+    border-radius: 5px;
+    border: 3px dashed #bec0da;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.upload-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #8A4FFF;
+    cursor: pointer;
+    width: 30%;
+    height: 20%;
+    font-size: larger;
+    min-width: 250px;
+    user-select: none;
+    box-shadow: 0 10px 20px #aa83ff;
+    border-radius: 3px;
+    color: white;
+}
+
+input[type="file"] {
+    display: none;
 }
