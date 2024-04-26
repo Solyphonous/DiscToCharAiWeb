@@ -39,6 +39,11 @@ label {
     box-shadow: 0 10px 20px #aa83ff;
     border-radius: 3px;
     color: white;
+    transition: background-color 0.3s;
+}
+
+.upload-button:hover {
+    background-color: #c0a3ff;
 }
 
 input[type="file"] {
