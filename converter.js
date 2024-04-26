@@ -18,8 +18,6 @@ function saveFile(text) {
 }
 
 function dropHandler(event) {
-    console.log("dropped")
-    event.preventDefault()
     let files = event.dataTransfer.files
     convertFile(files)
 }
